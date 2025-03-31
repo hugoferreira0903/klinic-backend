@@ -4,7 +4,11 @@ package dio.com.br.klinic.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "CONSULTAS")
@@ -24,6 +28,17 @@ public class ConsultaEntity {
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private MedicoEntity medico = new MedicoEntity();
+
+    @OneToMany(mappedBy = "consulta", cascade = ALL, orphanRemoval = true)
+    private Set<ConsultaClientEntity> consulta_client = new HashSet<>();
+
+    public Set<ConsultaClientEntity> getConsulta_client() {
+        return consulta_client;
+    }
+
+    public void setConsulta_client(Set<ConsultaClientEntity> consulta_client) {
+        this.consulta_client = consulta_client;
+    }
 
     public MedicoEntity getMedico() {
         return medico;

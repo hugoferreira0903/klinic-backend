@@ -2,7 +2,11 @@ package dio.com.br.klinic.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @Table(
@@ -35,6 +39,16 @@ public class ClientEntity {
     @Column(nullable = false, length = 150)
     private String password;
 
+    @OneToMany(mappedBy = "client", cascade = ALL, orphanRemoval = true)
+    private Set<ConsultaClientEntity> consulta_client = new HashSet<>();
+
+    public Set<ConsultaClientEntity> getConsulta_client() {
+        return consulta_client;
+    }
+
+    public void setConsulta_client(Set<ConsultaClientEntity> consulta_client) {
+        this.consulta_client = consulta_client;
+    }
 
     public Long getId() {
         return id;
